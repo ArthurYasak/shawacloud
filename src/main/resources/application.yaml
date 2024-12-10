@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: shawa-cloud
+  thymeleaf:
+    cache: false
+  datasource:
+    generate-unique-name: false
+    name: shawacloud
+    url: jdbc:h2:file:/h2/shawacloud
+    username: h2
+    password: 75sdQL57
+  sql:
+    init:
+      mode: always
