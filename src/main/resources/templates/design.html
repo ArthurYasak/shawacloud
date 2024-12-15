@@ -51,10 +51,20 @@
       </div>
     </div>
   </div>
+  <br/>
+  <div>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ingredients')}"
+          th:errors="*{ingredients}">Error</span>
+  </div>
   <div>
     <h3>Name your shawa creation:</h3>
     <input type="text" th:field="*{name}"/>
-    <br/>
+    <div>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}">Error</span>
+    </div>
     <button>Submit Your Shawarma</button>
   </div>
 </form>

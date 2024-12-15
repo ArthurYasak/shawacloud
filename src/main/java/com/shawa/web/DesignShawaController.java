@@ -3,6 +3,7 @@ package com.shawa.web;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.shawa.IngredientRef;
 import com.shawa.Shawa;
 import com.shawa.ShawaOrder;
 import com.shawa.data.IngredientRepository;
@@ -45,6 +46,11 @@ public class DesignShawaController {
         }
     }
 
+    @ModelAttribute(name = "ingredientRef")
+    public IngredientRef ingredientRef() {
+        return new IngredientRef();
+    }
+
     @ModelAttribute(name = "shawaOrder")
     public ShawaOrder order() {
         return new ShawaOrder();
@@ -62,7 +68,7 @@ public class DesignShawaController {
 
     @PostMapping
     public String processShawa(@ModelAttribute @Valid Shawa shawa, Errors errors,
-                                                  @ModelAttribute ShawaOrder shawaOrder) {
+                                @ModelAttribute ShawaOrder shawaOrder) {
         if (errors.hasErrors()) {
             return "design";
         }

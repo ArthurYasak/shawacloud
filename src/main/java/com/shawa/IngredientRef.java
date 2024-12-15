@@ -1,9 +1,13 @@
 package com.shawa;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -13,13 +17,14 @@ import lombok.Data;
 public class IngredientRef {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ingredient")
+    @ManyToOne()
+//    @JoinColumn(name = "ingredient") // works without it
     public Ingredient ingredient;
 
-    @ManyToOne
-    @JoinColumn(name = "shawa")
+    @ManyToOne()
+//    @JoinColumn(name = "shawa") // works without it
     public Shawa shawa;
 }

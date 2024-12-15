@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 @Table
 @Data
-@ToString(exclude = "shawaOrder")
+@ToString(exclude = {"shawaOrder", "ingredients"})
 public class Shawa {
 
     @Id
@@ -34,20 +34,22 @@ public class Shawa {
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
+//    @OneToMany(mappedBy = "shawa")
     @NotNull
-    @ManyToMany
+    @ManyToMany(/*mappedBy = "shawas",*/ targetEntity = Ingredient.class)
     @JoinTable(
             name = "Ingredient_Ref",
             joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
     @Size(min=1, message="You must choose at least 1 ingredient")
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<Ingredient> ingredients/* = new ArrayList<>()*/;   // todo: why last ingredient is NULL?
 
     @ManyToOne()
-    @JoinColumn(name = "SHAWA_ORDER")
+    @JoinColumn(name = "shawa_order")
     private ShawaOrder shawaOrder;
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
+        ingredient.getShawas().add(this);  // todo: delete
     }
 }

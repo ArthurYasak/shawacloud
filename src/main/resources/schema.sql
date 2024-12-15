@@ -35,3 +35,5 @@ alter table Shawa
     add foreign key (shawa_order) references Shawa_Order(id);
 alter table Ingredient_Ref
     add foreign key (ingredient) references Ingredient(id);
+alter table Ingredient_Ref
+    add foreign key (shawa) references Shawa(id);

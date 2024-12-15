@@ -11,4 +11,4 @@ spring:
     password: 75sdQL57
   sql:
     init:
-      mode: always
+      mode: always # embedded

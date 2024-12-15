@@ -1,5 +1,6 @@
 package com.shawa.web;
 
+import com.shawa.Shawa;
 import com.shawa.ShawaOrder;
 import com.shawa.data.OrderRepository;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -38,6 +41,10 @@ public class OrderController {
             return "/orderForm";
         }
         log.info("Order submitted: {}", order);
+        log.info("Needed ingredients: {}", order.getShawas()
+                .stream()
+                .flatMap(shawa -> shawa.getIngredients().stream())
+                .collect(Collectors.toSet()));
         orderRepository.save(order);
         sessionStatus.setComplete();
         return "redirect:/";
