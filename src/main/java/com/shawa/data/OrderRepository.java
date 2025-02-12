@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<ShawaOrder, Long> {
 
-    @Query("SELECT o FROM ShawaOrder o where o.deliveryCity = 'Siattle'")
-    List<ShawaOrder> readOrdersDeliveredInSeattle();
+//    @Query("SELECT o FROM ShawaOrder o where o.deliveryCity = 'Siattle'")
+//    List<ShawaOrder> readOrdersDeliveredInSeattle();
 }

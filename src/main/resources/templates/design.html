@@ -12,16 +12,18 @@
   <div class="grid">
     <div class="ingredient-group" id="wraps">
       <h3>Designate your wrap:</h3>
-      <div th:each="ingredient : ${wrap}">
-        <input th:field="*{ingredients}" type="checkbox"
+      <div th:each="ingredient : ${wrap}">    <!--Get {wrap} from Model when addIngredientsToModel() have worked-->
+        <!--post to ingredientRefs field in shawa object-->
+        <!--ingredient.id then converts to ingredientRef-->
+        <input th:field="*{ingredientRefs}" type="checkbox"
                th:value="${ingredient.id}"/>
-        <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+        <span th:text="${ingredient.name}">INGREDIENT</span><br/> <!--user see the full ingredient name near checkbox-->
       </div>
     </div>
     <div class="ingredient-group" id="proteins">
       <h3>Pick your protein:</h3>
       <div th:each="ingredient : ${protein}">
-        <input th:field="*{ingredients}" type="checkbox"
+        <input th:field="*{ingredientRefs}" type="checkbox"
                th:value="${ingredient.id}"/>
         <span th:text="${ingredient.name}">INGREDIENT</span><br/>
       </div>
@@ -29,7 +31,7 @@
     <div class="ingredient-group" id="cheeses">
       <h3>Choose your cheese:</h3>
       <div th:each="ingredient : ${cheese}">
-        <input th:field="*{ingredients}" type="checkbox"
+        <input th:field="*{ingredientRefs}" type="checkbox"
                th:value="${ingredient.id}"/>
         <span th:text="${ingredient.name}">INGREDIENT</span><br/>
       </div>
@@ -37,7 +39,7 @@
     <div class="ingredient-group" id="veggies">
       <h3>Determine your veggies:</h3>
       <div th:each="ingredient : ${veggies}">
-        <input th:field="*{ingredients}" type="checkbox"
+        <input th:field="*{ingredientRefs}" type="checkbox"
                th:value="${ingredient.id}"/>
         <span th:text="${ingredient.name}">INGREDIENT</span><br/>
       </div>
@@ -45,17 +47,18 @@
     <div class="ingredient-group" id="sauces">
       <h3>Select your sauce:</h3>
       <div th:each="ingredient : ${sauce}">
-        <input th:field="*{ingredients}" type="checkbox"
+        <input th:field="*{ingredientRefs}" type="checkbox"
                th:value="${ingredient.id}"/>
         <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+<!--        todo now: не работает с ingredientRefs-->
       </div>
     </div>
   </div>
   <br/>
   <div>
     <span class="validationError"
-          th:if="${#fields.hasErrors('ingredients')}"
-          th:errors="*{ingredients}">Error</span>
+          th:if="${#fields.hasErrors('ingredientRefs')}"
+          th:errors="*{ingredientRefs}">Error</span>
   </div>
   <div>
     <h3>Name your shawa creation:</h3>

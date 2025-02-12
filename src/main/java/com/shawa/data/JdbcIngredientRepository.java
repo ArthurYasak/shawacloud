@@ -52,7 +52,7 @@
 //    // преобразует ResultSet получаемый при селекте в Ingredient
 //    private Ingredient mapRowToIngredient(ResultSet row, int rowNum)
 //            throws SQLException {
-//        log.info(String.valueOf(rowNum)); // TODO
+//        log.info(String.valueOf(rowNum));
 //        return new Ingredient(
 //                row.getString("id"),
 //                row.getString("name"),
