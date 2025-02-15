@@ -4,7 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -35,15 +39,15 @@ public class Ingredient {
     @Enumerated(value = EnumType.STRING)
     private final Type type;
 
-//    @ManyToMany(/*mappedBy = "ingredients", */targetEntity = Shawa.class, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "ingredients"/*,targetEntity = Shawa.class, fetch = FetchType.EAGER*/)
 //    @JoinTable(
 //            name = "Ingredient_Ref",
 //            joinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"))
-//    private Set<Shawa> shawas; // When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
+    private Set<Shawa> shawas; // When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
 
-    @OneToMany(mappedBy = "ingredient"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.PERSIST)
-    private Set<IngredientRef> ingredientRefs;
+//    @OneToMany(mappedBy = "ingredient"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.PERSIST)
+//    private Set<IngredientRef> ingredientRefs;
 
     public enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
