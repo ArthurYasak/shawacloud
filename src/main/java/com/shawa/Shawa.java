@@ -36,17 +36,18 @@ public class Shawa {
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
-//    @ManyToMany(/*mappedBy = "shawas",*/ targetEntity = Ingredient.class)
-//    @JoinTable(
-//            name = "Ingredient_Ref",
-//            joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
-//    private Set<Ingredient> ingredients/* = new ArrayList<>()*/; // When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
-
-    @NotNull
-    @OneToMany(mappedBy = "shawa"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.PERSIST)
+    @ManyToMany(/*mappedBy = "shawas", targetEntity = Ingredient.class*/)
+    @JoinTable(
+            name = "Ingredient_Ref",
+            joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
     @Size(min=1, message="You must choose at least 1 ingredient")
-    private Set<IngredientRef> ingredientRefs;
+    private Set<Ingredient> ingredients/* = new ArrayList<>()*/; // When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
+
+//    @NotNull
+//    @OneToMany(mappedBy = "shawa"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.PERSIST)
+//    @Size(min=1, message="You must choose at least 1 ingredient")
+//    private Set<IngredientRef> ingredientRefs;
 
     @ManyToOne()
     @JoinColumn(name = "shawa_order")

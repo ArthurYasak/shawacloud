@@ -1,6 +1,6 @@
 package com.shawa.web;
 
-import com.shawa.IngredientRef;
+//import com.shawa.IngredientRef;
 import com.shawa.Shawa;
 import com.shawa.ShawaOrder;
 import com.shawa.data.OrderRepository;
@@ -51,16 +51,16 @@ public class OrderController {
         log.info("Order submitted: {}", order);
         orderRepository.save(order);
 
-//        log.info("Needed ingredients: {}", order.getShawas()
-//                .stream()
-//                .flatMap(shawa -> shawa.getIngredients().stream())
-//                .collect(Collectors.toSet()));
-
         log.info("Needed ingredients: {}", order.getShawas()
                 .stream()
-                .map(shawa -> shawa.getIngredientRefs().stream()
-                        .map(IngredientRef::getIngredient))
+                .flatMap(shawa -> shawa.getIngredients().stream())
                 .collect(Collectors.toSet()));
+
+//        log.info("Needed ingredients: {}", order.getShawas()
+//                .stream()
+//                .map(shawa -> shawa.getIngredientRefs().stream()
+//                        .map(IngredientRef::getIngredient))
+//                .collect(Collectors.toSet()));
 
         sessionStatus.setComplete();
         return "redirect:/";
