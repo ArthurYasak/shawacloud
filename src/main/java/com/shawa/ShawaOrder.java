@@ -1,32 +1,28 @@
 package com.shawa;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Digits;
+import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.shawa.utils.ShawaOrderUDRUtils;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Entity
-@Table
 @Data
-public class ShawaOrder {
+@Table("shawa_order")
+public class ShawaOrder implements Serializable {
 
-//    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;   // todo: 'serialVersionUID' can be annotated with '@Serial' annotation
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Date placedAt = new Date();
+
+    @PrimaryKey
+    private UUID id = Uuids.timeBased();
 
     @NotBlank(message="Delivery name is required")
     private String deliveryName;
@@ -51,15 +47,13 @@ public class ShawaOrder {
     private String ccExpiration;
 
 //    @Digits(integer=3, fraction=0, message="Invalid CVV")
-    @Column(name = "cc_cvv")
+    @Column("cc_cvv")
     private String ccCVV;
 
-    private Date placedAt = new Date();
-
-    @OneToMany(mappedBy = "shawaOrder", cascade = CascadeType.ALL)
-    private List<Shawa> shawas = new ArrayList<>();
+    @Column("shawas")
+    private List<ShawaUDT> shawas = new ArrayList<>();
 
     public void addShawa(Shawa shawa) {
-        this.shawas.add(shawa);
+        this.shawas.add(ShawaOrderUDRUtils.toShawaUDT(shawa));
     }
 }

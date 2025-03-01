@@ -1,12 +1,9 @@
 package com.shawa.web;
 
 //import com.shawa.IngredientRef;
-import com.shawa.Shawa;
+
 import com.shawa.ShawaOrder;
 import com.shawa.data.OrderRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -27,10 +24,7 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     OrderRepository orderRepository;
-
-    @PersistenceContext
-    EntityManager em; // todo: check old shawas связаны ли с ингредиентами если нет записей в IngredientRef
-
+    
     public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
@@ -42,7 +36,6 @@ public class OrderController {
     }
 
     @PostMapping
-    @Transactional
     public String processOrder(@ModelAttribute @Valid ShawaOrder order, Errors errors,
                         SessionStatus sessionStatus) {
         if (errors.hasErrors()) {

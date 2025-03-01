@@ -1,60 +1,48 @@
 package com.shawa;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.shawa.utils.ShawaUDRUtils;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.cassandra.core.cql.Ordering;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
+import java.util.UUID;
 
-@Entity
-@Table
 @Data
 @ToString(exclude = {"shawaOrder"/*, "ingredients"*/})
+@Table("shawa")
 public class Shawa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // todo: without it to check is id not generate using sql script
-    private Long id;
+    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
+    private UUID id = Uuids.timeBased();
 
+    @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private Date createdAt = new Date();
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
-    @ManyToMany(/*mappedBy = "shawas", targetEntity = Ingredient.class*/)
-    @JoinTable(
-            name = "Ingredient_Ref",
-            joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
+//    @ManyToMany(/*mappedBy = "shawas", targetEntity = Ingredient.class*/)
+//    @JoinTable(
+//            name = "Ingredient_Ref",
+//            joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
+
     @Size(min=1, message="You must choose at least 1 ingredient")
-    private Set<Ingredient> ingredients/* = new ArrayList<>()*/; // When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
+    @Column("ingredients")
+    private List<IngredientUDT> ingredients = new ArrayList<>(); // todo: delete: When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
 
-//    @NotNull
-//    @OneToMany(mappedBy = "shawa"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.PERSIST)
-//    @Size(min=1, message="You must choose at least 1 ingredient")
-//    private Set<IngredientRef> ingredientRefs;
-
-    @ManyToOne()
-    @JoinColumn(name = "shawa_order")
-    private ShawaOrder shawaOrder;
-
-//    public void addIngredientRefs(IngredientRef ingredientRef) {
-//        this.ingredientRefs.add(ingredientRef);
-//        ingredient.getShawas().add(this);
-//    }
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ShawaUDRUtils.toIngredientUDT(ingredient));
+    }
 }
