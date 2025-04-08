@@ -9,10 +9,18 @@ import java.util.List;
 
 @Data
 @Builder
-@UserDefinedType("shawa")
+@UserDefinedType(value = "shawa")
 public class ShawaUDT {
 
     private String name;
 
-    private List<IngredientUDT> ingredients = new ArrayList<>();
+    private List<IngredientUDT> ingredients = new ArrayList<>(); // TODO: How to add?
+
+    @Override
+    public String toString() {
+        return "ShawaUDT{" +
+                "name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                '}';
+    }
 }

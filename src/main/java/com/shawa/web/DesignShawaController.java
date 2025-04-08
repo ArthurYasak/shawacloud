@@ -58,7 +58,7 @@ public class DesignShawaController {
     }
 
     @ModelAttribute(name = "shawa")
-    public Shawa shawa() {  // TODO: NOW мб здесь сохранять список выбранных ингредиентов?
+    public Shawa shawa() {  // todo: мб здесь сохранять список выбранных ингредиентов?
         return new Shawa();     // moment when shawa is created and is put to model
     }
 

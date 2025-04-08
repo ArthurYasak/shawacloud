@@ -1,4 +1,5 @@
 package com.shawa;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +15,11 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Data
-@Table("shawa_order")
+@Table("shawa_orders")
 public class ShawaOrder implements Serializable {
 
-    private static final long serialVersionUID = 1L;   // todo: 'serialVersionUID' can be annotated with '@Serial' annotation
+//    @Serial   // todo: 'serialVersionUID' can be annotated with '@Serial' annotation
+//    private static final long serialVersionUID = 1L;  // todo: need this?
 
     private Date placedAt = new Date();
 
@@ -55,5 +57,22 @@ public class ShawaOrder implements Serializable {
 
     public void addShawa(Shawa shawa) {
         this.shawas.add(ShawaOrderUDRUtils.toShawaUDT(shawa));
+    }
+
+    @Override
+    public String toString() {
+        return "ShawaOrder{" +
+                "placedAt=" + placedAt +
+                ", id=" + id +
+                ", deliveryName='" + deliveryName + '\'' +
+                ", deliveryStreet='" + deliveryStreet + '\'' +
+                ", deliveryCity='" + deliveryCity + '\'' +
+                ", deliveryState='" + deliveryState + '\'' +
+                ", deliveryZip='" + deliveryZip + '\'' +
+                ", ccNumber='" + ccNumber + '\'' +
+                ", ccExpiration='" + ccExpiration + '\'' +
+                ", ccCVV='" + ccCVV + '\'' +
+                ", shawas=" + shawas.toString() +
+                '}';
     }
 }

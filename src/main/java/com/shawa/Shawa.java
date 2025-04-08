@@ -4,7 +4,9 @@ import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.shawa.utils.ShawaUDRUtils;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
@@ -18,8 +20,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@ToString(exclude = {"shawaOrder"/*, "ingredients"*/})
-@Table("shawa")
+//@ToString(exclude = {"shawaOrder"/*, "ingredients"*/})
+@Table("shawas")
 public class Shawa {
 
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
@@ -32,17 +34,12 @@ public class Shawa {
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
-//    @ManyToMany(/*mappedBy = "shawas", targetEntity = Ingredient.class*/)
-//    @JoinTable(
-//            name = "Ingredient_Ref",
-//            joinColumns = @JoinColumn(name = "shawa", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "ingredient", referencedColumnName = "id"))
-
+    // UDT - user defined type
     @Size(min=1, message="You must choose at least 1 ingredient")
     @Column("ingredients")
-    private List<IngredientUDT> ingredients = new ArrayList<>(); // todo: delete: When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
+    private List<IngredientUDT> ingredients = new ArrayList<>(); // for delete: When using a List, Hibernate removes all entities from the junction table and inserts the remaining ones. This can cause performance issues. We can easily avoid this problem by using Set.
 
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(Ingredient ingredient) { // TODO: Что с конвертацией??
         this.ingredients.add(ShawaUDRUtils.toIngredientUDT(ingredient));
     }
 }

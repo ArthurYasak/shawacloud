@@ -2,7 +2,9 @@ package com.shawa.web;
 
 //import com.shawa.IngredientRef;
 
+import com.shawa.Shawa;
 import com.shawa.ShawaOrder;
+import com.shawa.ShawaUDT;
 import com.shawa.data.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +44,7 @@ public class OrderController {
             return "/orderForm";
         }
         log.info("Order submitted: {}", order);
-        orderRepository.save(order);
-
+        orderRepository.save(order);    // TODO NOW: all is ok when debug, why not save shawas
         log.info("Needed ingredients: {}", order.getShawas()
                 .stream()
                 .flatMap(shawa -> shawa.getIngredients().stream())
