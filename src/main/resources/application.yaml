@@ -8,7 +8,7 @@ spring:
       mode: always # embedded never
   cassandra:
     keyspace-name: shawacloud
-    schema-action: recreate # none # create_if_not_exists: гарантирует удаление и воссоздание любых таблиц и пользовательских типов при каждом запуске приложения
+    schema-action: create_if_not_exists # none # recreate : гарантирует удаление и воссоздание любых таблиц и пользовательских типов при каждом запуске приложения
     local-datacenter: datacenter1
     contact-points: localhost
 #    contact-points: # A contact point is the host where a Cassandra node is running.

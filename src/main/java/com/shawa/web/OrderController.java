@@ -44,7 +44,7 @@ public class OrderController {
             return "/orderForm";
         }
         log.info("Order submitted: {}", order);
-        orderRepository.save(order);    // TODO NOW: all is ok when debug, why not save shawas
+        orderRepository.save(order);
         log.info("Needed ingredients: {}", order.getShawas()
                 .stream()
                 .flatMap(shawa -> shawa.getIngredients().stream())
