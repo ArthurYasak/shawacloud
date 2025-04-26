@@ -1,0 +1,40 @@
+-- drop table if exists Shawa_Order cascade;
+-- create table if not exists Shawa_Order (
+--                                           id identity,
+--                                           delivery_Name varchar(50) not null,
+--                                           delivery_Street varchar(50) not null,
+--                                           delivery_City varchar(50) not null,
+--                                           delivery_State varchar(20) not null,
+--                                           delivery_Zip varchar(10) not null,
+--                                           cc_number varchar(16) not null,
+--                                           cc_expiration varchar(5) not null,
+--                                           cc_cvv varchar(3) not null,
+--                                           placed_at timestamp not null
+-- );
+-- drop table if exists Shawa cascade ;
+-- create table if not exists Shawa (
+--                                     id identity,
+--                                     name varchar(50) not null,
+--                                     shawa_order bigint not null,
+--                                     created_at timestamp not null
+-- );
+-- drop table if exists Ingredient_Ref cascade ;
+-- create table if not exists Ingredient_Ref (
+--                                               id identity,
+--                                               ingredient_id varchar(4) not null,
+--                                               shawa_id bigint not null,
+--                                               weight integer
+-- );
+-- drop table if exists Ingredient;
+-- create table if not exists Ingredient (
+--                                           id varchar(4) not null,
+--                                           name varchar(25) not null,
+--                                           type varchar(10) not null
+-- );
+-- alter table Ingredient add PRIMARY KEY (id);
+-- alter table Shawa
+--     add foreign key (shawa_order) references Shawa_Order(id);
+-- alter table Ingredient_Ref
+--     add foreign key (ingredient_id) references Ingredient(id);
+-- alter table Ingredient_Ref
+--     add foreign key (shawa_id) references Shawa(id);
