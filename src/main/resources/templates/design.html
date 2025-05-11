@@ -9,6 +9,7 @@
 <h1>Design your shawarma!</h1>
 <img th:src="@{/images/veganshawarmarecipe(267).jpg}"/>
 <form method="POST" th:object="${shawa}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
   <div class="grid">
     <div class="ingredient-group" id="wraps">
       <h3>Designate your wrap:</h3>
